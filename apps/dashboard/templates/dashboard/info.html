@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <title>info</title>
+
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-dark bg-dark">
+            <h3 style="color: white"> Welcome,{{request.session.username}} |</h3>
+            <a href="{% url 'dashboard:logout' %}"><button type="button" class="btn btn-primary">Log Out</button></a>
+        </nav>
+        <h1>{{item.name}}</h1>
+        <h5>Users who added this product/item inder wish list
+            <ul>
+                {%for i in list%}
+                <li>{{i.first_name}}</li>
+                {%endfor%}
+            </ul>
+        </h5>
+    </div>
+    
+</body>
+</html>
