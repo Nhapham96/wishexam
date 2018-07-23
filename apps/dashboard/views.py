@@ -8,11 +8,12 @@ def index(request):
     me = User.objects.get(id=request.session['user_id'])
     print(me)
     context={
-        'my_items':me.add.all(),
-        'items': Mylist.objects.all(),
-        'all_items':List.objects.all()
+        'my_items':List.objects.filter(added_by=me),
+        'all_items':List.objects.exclude(added_by=me)
     }
-    print(me.add.all())
+    for i in List.objects.exclude(added_by=me):
+        print(i.addtolist_by.first_name)
+
     return render(request,'dashboard/index.html',context)
 def logout(request):
     request.session.clear()
@@ -24,7 +25,7 @@ def delete(request):
     List.objects.delete(request.POST)
     return redirect(reverse('dashboard:index'))
 def add(request):
-    Mylist.objects.addding(request.POST)
+    List.objects.adding(request.POST)
     return redirect(reverse('dashboard:index'))
 def additem(request):
     context={
@@ -43,8 +44,9 @@ def create(request):
     else:
         return redirect(reverse('dashboard:index'))
 def info(request,id):
-    item=Mylist.objects.get(id=id)
+    item=List.objects.get(id=id)
     context={
-        'item':Mylist.objects.get(id=id),
+        'item':item,
+        'list':item.added_by.all()
     }
     return render(request,'dashboard/info.html',context)

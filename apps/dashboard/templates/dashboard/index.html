@@ -31,18 +31,24 @@
                         <a name="item_name" href=" dashboard/info/{{i.id}} ">{{i.name}} </a>    
                         
                     </th>
-                    <td>{{i.added_by.first_name}} {{i.added_by.last_name}}</td>
+                    <td>{{i.addtolist_by.first_name}} {{i.addtolistc_by.last_name}}</td>
                     <td>{{i.created_at}} </td>
                     <td><form action="dashboard/remove" method="post">
                                  {% csrf_token %}
                                  
                         <input type="hidden" name="user" value="{{request.session.user_id}}">
                         <input type="hidden" name="item_id" value="{{i.id}}">
-                    <button type="submit" class="btn btn-primary">Remove from my list</button> |
+                    <button type="submit" class="btn btn-primary">Remove from my list</button> </form>
+                    {% if i.addtolist_by.id == request.session.user_id %}
                     <form action="dashboard/delete" method="post">
-                        <input type="hidden" name="user" value="{{request.session.user_id}}">
-                        <input type="hidden" name="item_id" value="{{i.id}}">
-                        <button type="submit" class="btn btn-primary">Delete</button></form>
+                      {% csrf_token %}
+                      <input type="hidden" name="user" value="{{request.session.user_id}}">
+                      <input type="hidden" name="item_id" value="{{i.id}}">
+                      <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+                    </td>
+                    {% endif%}
+                    
                      
                       </form></td>
                    
@@ -62,16 +68,23 @@
                     <tbody>
                         {%for i in all_items%}
                       <tr>
-                        <th scope="row">{{i.name}}</th>
-                        <td>{{i.added_by.first_name}} {{i.added_by.last_name}}</td>
+                        <th scope="row"><a name="item_name" href=" dashboard/info/{{i.id}} ">{{i.name}} </a> </th>
+                        <td>{{i.addtolist_by.first_name}} {{i.addtolist_by.last_name}}</td>
                         <td>{{i.created_at}} </td>
                         <td><form action="dashboard/add" method="post">
                                      {% csrf_token %}
                             <button class="btn-sm btn-primary" type="submit">Add to my Wishlist</button>
-                            <input type="hidden" name="me" value="{{request.session.user_id}}">
+                            <input type="hidden" name="me" value="{{request.session.user_id}}"> 
                             <input type="hidden" name="item_name" value="{{i.name}}">
-    
-                          </form></td>
+                          </form>{% if i.addtolist_by.id == request.session.user_id %}
+                          <form action="dashboard/delete" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="user" value="{{request.session.user_id}}">
+                            <input type="hidden" name="item_id" value="{{i.id}}">
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                          </form>
+                          </td>
+                          {% endif%}
                           
                        
                       </tr>

@@ -11,7 +11,7 @@
     <div class="container">
             <nav class="navbar navbar-dark bg-dark">
                 <h3 style="color: white"> Welcome,{{request.session.username}} |</h3>
-                <a href="{% url'dashboard:index' %"></a>
+                <a href="{% url 'dashboard:index' %}"></a>
                 <a href="{% url 'dashboard:logout' %}"><button type="button" class="btn btn-primary">Log Out</button></a>
             </nav>
         <h1>Create a New Wish List Item</h1>
@@ -32,7 +32,11 @@
             <input type="hidden" name="me" value="{{me.id}}" >
         </div>
         <button type="submit" class="btn btn-primary">Add</button>
-        </form>
+        </form> 
+        <div class="row justify-content-end ">
+            <a href="{% url 'dashboard:index' %}"><button  class="btn btn-primary">Back</button></a>
+        </div>
+        
     </div>
 
 </body>
